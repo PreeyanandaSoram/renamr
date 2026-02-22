@@ -1,5 +1,8 @@
 #!/usr/bin/env node
 
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { program } from 'commander';
 import { replace } from '../src/commands/replace.js';
 import { ext } from '../src/commands/ext.js';
@@ -8,10 +11,15 @@ import { suffix } from '../src/commands/suffix.js';
 import { lowercase } from '../src/commands/lowercase.js';
 import { uppercase } from '../src/commands/uppercase.js';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const pkgPath = path.join(__dirname, '..', 'package.json');
+const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'));
+
 program
   .name('renamr')
   .description('A fast and simple bulk file renamer CLI')
-  .version('1.0.0');
+  .version(pkg.version);
 
 program
   .command('replace <pattern> <files...>')
