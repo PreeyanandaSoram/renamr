@@ -1,6 +1,6 @@
 {
   "name": "renamr",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A fast and simple bulk file renamer CLI",
   "main": "src/index.js",
   "bin": {
