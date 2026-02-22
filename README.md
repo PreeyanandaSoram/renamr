@@ -1,6 +1,6 @@
 # renamr
 
-[![npm version](https://badge.fury.io/js/renamr.svg)](https://badge.fury.io/js/renamr)
+[![npm version](https://img.shields.io/npm/v/renamr.svg?color=green)](https://www.npmjs.com/package/renamr)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 **renamr** is a fast, intuitive, and robust bulk file renaming tool for the command line. Designed with efficiency and simplicity in mind, it allows developers and power users to perform complex renaming operations across thousands of files instantly.
