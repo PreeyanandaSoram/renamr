@@ -1,6 +1,6 @@
 {
   "name": "renamr",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A fast and simple bulk file renamer CLI",
   "main": "src/index.js",
   "bin": {
@@ -9,7 +9,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["cli", "rename", "bulk", "files", "renamer"],
+  "keywords": [
+    "cli",
+    "rename",
+    "bulk",
+    "files",
+    "renamer"
+  ],
   "author": "",
   "license": "MIT",
   "type": "module",
