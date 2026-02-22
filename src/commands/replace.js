@@ -2,16 +2,17 @@ import path from 'path';
 import chalk from 'chalk';
 import { getFiles, renameFile, getBaseAndExt } from '../utils.js';
 
-export async function replace(pattern, replacement, files, options) {
+export async function replace(pattern, files, options) {
+  const replacement = options.with;
   const matches = await getFiles(files, options.recursive);
-  
+
   if (matches.length === 0) {
     console.log(chalk.yellow('No files found matching the pattern.'));
     return;
   }
 
   const results = [];
-  
+
   for (const file of matches) {
     const { base, ext, dir } = getBaseAndExt(file);
     const newBase = base.split(pattern).join(replacement);

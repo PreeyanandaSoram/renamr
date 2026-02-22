@@ -2,21 +2,19 @@ import path from 'path';
 import chalk from 'chalk';
 import { getFiles, renameFile, getBaseAndExt } from '../utils.js';
 
-export async function ext(oldExt, newExt, files, options) {
+export async function ext(files, options) {
+  const newExt = options.with;
   const matches = await getFiles(files, options.recursive);
-  const normalizedOldExt = oldExt.startsWith('.') ? oldExt : `.${oldExt}`;
   const normalizedNewExt = newExt.startsWith('.') ? newExt : `.${newExt}`;
 
-  const filtered = matches.filter(f => path.extname(f).toLowerCase() === normalizedOldExt.toLowerCase());
-
-  if (filtered.length === 0) {
-    console.log(chalk.yellow(`No files with ${normalizedOldExt} extension found.`));
+  if (matches.length === 0) {
+    console.log(chalk.yellow(`No files found.`));
     return;
   }
 
   const results = [];
 
-  for (const file of filtered) {
+  for (const file of matches) {
     const { base, dir } = getBaseAndExt(file);
     const newPath = path.join(dir, base + normalizedNewExt);
     const result = renameFile(file, newPath, options.dryRun);

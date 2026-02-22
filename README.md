@@ -1,103 +1,111 @@
 # renamr
 
-A fast and simple bulk file renamer for the command line.
+[![npm version](https://badge.fury.io/js/renamr.svg)](https://badge.fury.io/js/renamr)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## Installation
+**renamr** is a fast, intuitive, and robust bulk file renaming tool for the command line. Designed with efficiency and simplicity in mind, it allows developers and power users to perform complex renaming operations across thousands of files instantly.
+
+---
+
+## 🚀 Features
+
+- **Expressive Syntax:** Simple commands to replace text, modify extensions, and manipulate casing.
+- **Dry Run Support:** Preview all your renaming operations safely before applying any changes using the `--dry-run` flag.
+- **Recursive Operations:** Seamlessly rename files nested deeply within complex directory structures.
+- **Cross-Platform:** Built on Node.js, ensuring consistent behavior across Windows, macOS, and Linux.
+
+---
+
+## 📦 Installation
+
+Install `renamr` globally via npm to access it continuously from anywhere on your system:
 
 ```bash
 npm install -g renamr
 ```
 
-## Usage
+---
 
-```
+## 🛠️ Usage Guide
+
+The general syntax follows a structured command format:
+
+```bash
 renamr <command> [options] <files...>
 ```
 
 ### Commands
 
-#### replace
-
-Replace text in file names.
-
-```bash
-renamr replace "old" "new" ./src/**/*
-```
-
-#### ext
-
-Change file extensions.
+#### Text Replacement (`replace`)
+Seamlessly replace occurrences of a string within file names.
 
 ```bash
-renamr ext .js .ts ./src/**/*.js
+renamr replace "old-text" -w "new-text" ./src/**/*
 ```
 
-#### prefix
+#### Extension Modification (`ext`)
+Quickly standardize or convert file extensions across your project.
 
-Add a prefix to file names.
+```bash
+renamr ext ./src/**/*.js -w .ts
+```
+
+#### Add Prefix (`prefix`)
+Prepend a consistent string to the beginning of matched file names.
 
 ```bash
 renamr prefix "img_" ./assets/*.png
 ```
 
-#### suffix
-
-Add a suffix to file names (before the extension).
-
-```bash
-renamr suffix "_backup" ./data/*.json
-```
-
-#### lowercase
-
-Convert file names to lowercase.
+#### Add Suffix (`suffix`)
+Append a string to matched file names, guaranteeing the suffix is inserted correctly right before the file extension.
 
 ```bash
-renamr lowercase ./src/**/*
+renamr suffix "_v2" ./data/*.json
 ```
 
-#### uppercase
-
-Convert file names to uppercase.
+#### Case Conversions (`lowercase` & `uppercase`)
+Standardize naming conventions by applying lower or upper casing to file names. Both commands feature convenient shorthand aliases (`low` and `upp`).
 
 ```bash
-renamr uppercase ./src/**/*
+# Convert to lowercase
+renamr low ./dist/**/* --recursive
+
+# Convert to uppercase
+renamr upp ./src/**/* --recursive
 ```
 
-### Options
+---
 
-| Option | Description |
-|--------|-------------|
-| `-d, --dry-run` | Preview changes without applying them |
-| `-r, --recursive` | Search files recursively |
+## ⚙️ Configuration Flags
 
-### Examples
+| Flag | Shorthand | Description |
+| :--- | :-------- | :---------- |
+| `--with <value>` | `-w` | **Required** for `replace` and `ext` commands. Specifies the replacement string or new extension.  |
+| `--dry-run` | `-d` | **Safe Mode:** Previews changes in the console without actually renaming any files. Highly recommended before destructive actions. |
+| `--recursive` | `-r` | Executes the command recursively across all subdirectories matching the glob pattern. |
 
-Preview changes before applying:
+---
 
+## 💡 Practical Examples
+
+Safe preview of an architectural refactor:
 ```bash
-renamr replace "component" "widget" ./src/**/* --dry-run
+renamr replace "component" -w "widget" ./src/**/* --dry-run
 ```
 
-Rename all JS files to TypeScript:
-
+Migrating a legacy JavaScript codebase to TypeScript:
 ```bash
-renamr ext .js .ts ./src/**/*.js
+renamr ext ./src/**/*.js -w .ts
 ```
 
-Add a timestamp prefix to all images:
-
+Batch renaming user uploads with a timestamp:
 ```bash
-renamr prefix "2024-06-15_" ./screenshots/*
+renamr prefix "upload_2024_" ./public/uploads/*
 ```
 
-Convert all file names in a directory to lowercase:
+---
 
-```bash
-renamr lowercase ./dist/**/* --recursive
-```
+## 📄 License
 
-## License
-
-This project is licensed under the MIT License.
-See the [LICENSE](./LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

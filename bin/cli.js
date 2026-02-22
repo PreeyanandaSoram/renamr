@@ -14,15 +14,17 @@ program
   .version('1.0.0');
 
 program
-  .command('replace <pattern> <replacement> <files...>')
+  .command('replace <pattern> <files...>')
   .description('Replace text in file names')
+  .requiredOption('-w, --with <replacement>', 'Replacement string')
   .option('-d, --dry-run', 'Preview changes without applying', false)
   .option('-r, --recursive', 'Search files recursively', false)
   .action(replace);
 
 program
-  .command('ext <oldExt> <newExt> <files...>')
+  .command('ext <files...>')
   .description('Change file extensions')
+  .requiredOption('-w, --with <newExt>', 'New extension')
   .option('-d, --dry-run', 'Preview changes without applying', false)
   .option('-r, --recursive', 'Search files recursively', false)
   .action(ext);
@@ -43,6 +45,7 @@ program
 
 program
   .command('lowercase <files...>')
+  .alias('low')
   .description('Convert file names to lowercase')
   .option('-d, --dry-run', 'Preview changes without applying', false)
   .option('-r, --recursive', 'Search files recursively', false)
@@ -50,6 +53,7 @@ program
 
 program
   .command('uppercase <files...>')
+  .alias('upp')
   .description('Convert file names to uppercase')
   .option('-d, --dry-run', 'Preview changes without applying', false)
   .option('-r, --recursive', 'Search files recursively', false)
