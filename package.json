@@ -1,18 +1,23 @@
 {
   "name": "renamr",
   "version": "1.0.0",
-  "description": "A fast and simple bulk file renamer CLI",
-  "main": "src/index.js",
+  "description": "Fast and simple CLI bulk file renamer",
   "bin": {
-    "renamr": "./bin/cli.js"
+    "renamr": ".bincli.js"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": ["cli", "rename", "bulk", "files", "renamer"],
-  "author": "",
-  "license": "MIT",
   "type": "module",
+  "keywords": [
+    "cli",
+    "bulk-rename",
+    "file-renamer",
+    "nodejs",
+    "developer-tools"
+  ],
+  "author": "Preeyananda Soram",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
   "dependencies": {
     "chalk": "^5.6.2",
     "commander": "^14.0.3",
