@@ -1,9 +1,13 @@
 {
   "name": "renamr",
-  "version": "1.0.0",
-  "description": "Fast and simple CLI bulk file renamer",
+  "version": "1.0.1",
+  "description": "A fast and simple bulk file renamer CLI",
+  "main": "src/index.js",
   "bin": {
-    "renamr": ".bincli.js"
+    "renamr": "./bin/cli.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "type": "module",
   "keywords": [
