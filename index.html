@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Essential SEO Meta Tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="UMzW0HITTE0XAqx5Xr8f6Z3yF9EzAtUNZZL3pUvx-Wc" />
+    <title>renamr - Fast & Intuitive Bulk File Renamer for CLI</title>
+    <meta name="description"
+        content="renamr is a fast, intuitive, and robust bulk file renaming tool for the command line. Easily replace text, modify extensions, and manipulate casing securely across any OS.">
+    <meta name="keywords"
+        content="cli, file renamer, bulk rename, bash, nodejs, command line tool, renamr, file automation">
+    <meta name="author" content="Preeyananda Soram">
+    <link rel="canonical" href="https://preeyanandasoram.github.io/renamr/">
+
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="renamr - Bulk File Renamer">
+    <meta property="og:description"
+        content="A blazing fast bulk file renaming tool for the command line. Open source and built with Node.js.">
+    <meta property="og:url" content="https://preeyanandasoram.github.io/renamr/">
+    <meta property="og:type" content="website">
+
+    <!-- Fonts: Inter & Fira Code -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <!-- Premium Aesthetics & Styles -->
+    <style>
+        :root {
+            --bg-color: #06090e;
+            --text-primary: #94a3b8;
+            --text-hero: #f8fafc;
+            --accent: #38bdf8;
+            --accent-gradient: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            --card-bg: rgba(30, 41, 59, 0.4);
+            --code-bg: #0f172a;
+            --border: rgba(51, 65, 85, 0.5);
+            --border-hover: rgba(56, 189, 248, 0.5);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image:
+                radial-gradient(circle at 15% 50%, rgba(56, 189, 248, 0.05), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(129, 140, 248, 0.05), transparent 25%);
+            color: var(--text-primary);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            color: var(--text-hero);
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        h1 {
+            font-size: clamp(3rem, 8vw, 5rem);
+            margin-bottom: 1.5rem;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -2px;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            color: var(--text-primary);
+        }
+
+        .badges {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .badges img {
+            height: 28px;
+            border-radius: 4px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Syntax and Code Blocks */
+        pre {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            overflow-x: auto;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.95rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        pre::before {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        }
+
+        code {
+            font-family: 'Fira Code', monospace;
+            color: var(--accent);
+            background: rgba(56, 189, 248, 0.1);
+            padding: 0.2em 0.4em;
+            border-radius: 6px;
+            font-size: 0.9em;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            color: #e2e8f0;
+        }
+
+        .prompt {
+            color: #818cf8;
+            user-select: none;
+        }
+
+        .command {
+            color: #38bdf8;
+        }
+
+        .string {
+            color: #34d399;
+        }
+
+        .flag {
+            color: #fbbf24;
+        }
+
+        .comment {
+            color: #64748b;
+            font-style: italic;
+        }
+
+        /* Feature Grid */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--border-hover);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            background: rgba(30, 41, 59, 0.6);
+        }
+
+        .feature-card h3 {
+            margin-top: 0;
+            font-size: 1.25rem;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* CTA Button */
+        .github-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--text-hero);
+            color: var(--bg-color);
+            padding: 0.875rem 2rem;
+            border-radius: 999px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.2s;
+            box-shadow: 0 4px 14px 0 rgba(255, 255, 255, 0.25);
+        }
+
+        .github-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3);
+            background: #ffffff;
+        }
+
+        /* Sections */
+        section {
+            margin-top: 5rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        th,
+        td {
+            padding: 1.25rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: rgba(15, 23, 42, 0.8);
+            color: var(--text-hero);
+            font-weight: 600;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Command blocks */
+        .cmd-block {
+            margin-bottom: 2.5rem;
+        }
+
+        .cmd-block h4 {
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        footer {
+            margin-top: 6rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: #64748b;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 3rem 1.5rem;
+            }
+
+            table {
+                display: block;
+                overflow-x: auto;
+            }
+
+            th,
+            td {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <header class="hero">
+            <h1>renamr</h1>
+            <div class="badges">
+                <a href="https://www.npmjs.com/package/renamr" target="_blank">
+                    <img src="https://badge.fury.io/js/renamr.svg" alt="npm version">
+                </a>
+                <a href="https://opensource.org/licenses/MIT" target="_blank">
+                    <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT">
+                </a>
+            </div>
+            <p><strong>renamr</strong> is a fast, intuitive, and robust bulk file renaming tool for the command line.
+                Designed with efficiency and simplicity in mind.</p>
+            <a href="https://github.com/preeyanandasoram/renamr" class="github-btn">
+                <svg height="24" viewBox="0 0 16 16" width="24">
+                    <path fill="currentColor"
+                        d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z">
+                    </path>
+                </svg>
+                View on GitHub
+            </a>
+        </header>
+
+        <!-- Features -->
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>⚡ Expressive Syntax</h3>
+                <p>Simple commands to replace text, modify extensions, and manipulate casing effortlessly.</p>
+            </div>
+            <div class="feature-card">
+                <h3>🛡️ Dry Run Support</h3>
+                <p>Preview all your renaming operations safely before applying any changes using the
+                    <code>--dry-run</code> flag.
+                </p>
+            </div>
+            <div class="feature-card">
+                <h3>📂 Recursive Operations</h3>
+                <p>Seamlessly rename files nested deeply within complex directory structures with ease.</p>
+            </div>
+            <div class="feature-card">
+                <h3>🌐 Cross-Platform</h3>
+                <p>Built on Node.js, ensuring consistent behavior across Windows, macOS, and Linux systems.</p>
+            </div>
+        </div>
+
+        <!-- Installation -->
+        <section>
+            <h2 class="section-title">📦 Installation</h2>
+            <p>Install <code>renamr</code> globally via npm to access it continuously from anywhere on your system:</p>
+            <pre><code><span class="prompt">$</span> <span class="command">npm</span> install -g renamr</code></pre>
+        </section>
+
+        <!-- Usage -->
+        <section>
+            <h2 class="section-title">🛠️ Usage Guide</h2>
+            <p>The general syntax follows a structured command format:</p>
+            <pre><code><span class="prompt">$</span> <span class="command">renamr</span> &lt;command&gt; [options] &lt;files...&gt;</code></pre>
+
+            <h3>Commands</h3>
+
+            <div class="cmd-block">
+                <h4>Text Replacement (<code>replace</code>)</h4>
+                <p>Seamlessly replace occurrences of a string within file names.</p>
+                <pre><code><span class="prompt">$</span> <span class="command">renamr</span> replace <span class="string">"old-text"</span> <span class="flag">-w</span> <span class="string">"new-text"</span> ./src/**/*</code></pre>
+            </div>
+
+            <div class="cmd-block">
+                <h4>Extension Modification (<code>ext</code>)</h4>
+                <p>Quickly standardize or convert file extensions across your project.</p>
+                <pre><code><span class="prompt">$</span> <span class="command">renamr</span> ext ./src/**/*.js <span class="flag">-w</span> .ts</code></pre>
+            </div>
+
+            <div class="cmd-block">
+                <h4>Add Prefix (<code>prefix</code>)</h4>
+                <p>Prepend a consistent string to the beginning of matched file names.</p>
+                <pre><code><span class="prompt">$</span> <span class="command">renamr</span> prefix <span class="string">"img_"</span> ./assets/*.png</code></pre>
+            </div>
+
+            <div class="cmd-block">
+                <h4>Add Suffix (<code>suffix</code>)</h4>
+                <p>Append a string to matched file names right before the file extension.</p>
+                <pre><code><span class="prompt">$</span> <span class="command">renamr</span> suffix <span class="string">"_v2"</span> ./data/*.json</code></pre>
+            </div>
+
+            <div class="cmd-block">
+                <h4>Case Conversions (<code>lowercase</code> & <code>uppercase</code>)</h4>
+                <p>Standardize naming conventions. Shorthand aliases: <code>low</code> and <code>upp</code>.</p>
+                <pre><code><span class="comment"># Convert to lowercase</span>
+<span class="prompt">$</span> <span class="command">renamr</span> low ./dist/**/* <span class="flag">--recursive</span>
+
+<span class="comment"># Convert to uppercase</span>
+<span class="prompt">$</span> <span class="command">renamr</span> upp ./src/**/* <span class="flag">--recursive</span></code></pre>
+            </div>
+        </section>
+
+        <!-- Config Flags -->
+        <section>
+            <h2 class="section-title">⚙️ Configuration Flags</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Flag</th>
+                        <th>Shorthand</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>--with &lt;value&gt;</code></td>
+                        <td><code>-w</code></td>
+                        <td><strong>Required</strong> for <code>replace</code> and <code>ext</code> commands. Specifies
+                            the replacement string or new extension.</td>
+                    </tr>
+                    <tr>
+                        <td><code>--dry-run</code></td>
+                        <td><code>-d</code></td>
+                        <td><strong>Safe Mode:</strong> Previews changes in the console without actually renaming any
+                            files. Highly recommended.</td>
+                    </tr>
+                    <tr>
+                        <td><code>--recursive</code></td>
+                        <td><code>-r</code></td>
+                        <td>Executes the command recursively across all subdirectories matching the glob pattern.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Practical Examples -->
+        <section>
+            <h2 class="section-title">💡 Practical Examples</h2>
+
+            <p>Safe preview of an architectural refactor:</p>
+            <pre><code><span class="prompt">$</span> <span class="command">renamr</span> replace <span class="string">"component"</span> <span class="flag">-w</span> <span class="string">"widget"</span> ./src/**/* <span class="flag">--dry-run</span></code></pre>
+
+            <p>Migrating a legacy JavaScript codebase to TypeScript:</p>
+            <pre><code><span class="prompt">$</span> <span class="command">renamr</span> ext ./src/**/*.js <span class="flag">-w</span> .ts</code></pre>
+
+            <p>Batch renaming user uploads with a timestamp:</p>
+            <pre><code><span class="prompt">$</span> <span class="command">renamr</span> prefix <span class="string">"upload_2024_"</span> ./public/uploads/*</code></pre>
+        </section>
+
+        <footer>
+            <p>Licensed under the MIT License.</p>
+        </footer>
+    </div>
+</body>
+
+</html>
