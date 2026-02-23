@@ -57,10 +57,10 @@ Search and replace text *inside* the contents of files instead of just renaming 
 
 ```bash
 # From current directory
-renamr content "music player" -w "clara player"
+renamr content "music player" -w "video player"
 
 # With explicit glob
-renamr content "music player" -w "clara player" ./**/* --recursive
+renamr content "music player" -w "video player" ./**/* --recursive
 ```
 
 #### Extension Modification (`ext`)
