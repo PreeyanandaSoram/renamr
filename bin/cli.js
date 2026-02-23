@@ -4,12 +4,13 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { program } from 'commander';
-import { replace } from '../src/commands/replace.js';
+import { change } from '../src/commands/change.js';
 import { ext } from '../src/commands/ext.js';
 import { prefix } from '../src/commands/prefix.js';
 import { suffix } from '../src/commands/suffix.js';
 import { lowercase } from '../src/commands/lowercase.js';
 import { uppercase } from '../src/commands/uppercase.js';
+import { content } from '../src/commands/content.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -22,12 +23,12 @@ program
   .version(pkg.version);
 
 program
-  .command('replace <pattern> <files...>')
+  .command('change <pattern> <files...>')
   .description('Replace text in file names')
   .requiredOption('-w, --with <replacement>', 'Replacement string')
   .option('-d, --dry-run', 'Preview changes without applying', false)
   .option('-r, --recursive', 'Search files recursively', false)
-  .action(replace);
+  .action(change);
 
 program
   .command('ext <files...>')
@@ -66,5 +67,14 @@ program
   .option('-d, --dry-run', 'Preview changes without applying', false)
   .option('-r, --recursive', 'Search files recursively', false)
   .action(uppercase);
+
+program
+  .command('content <pattern> <files...>')
+  .alias('rewrite')
+  .description('Replace text inside the contents of files')
+  .requiredOption('-w, --with <replacement>', 'Replacement string')
+  .option('-d, --dry-run', 'Preview changes without applying', false)
+  .option('-r, --recursive', 'Search files recursively', false)
+  .action(content);
 
 program.parse();

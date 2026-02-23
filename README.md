@@ -36,11 +36,18 @@ renamr <command> [options] <files...>
 
 ### Commands
 
-#### Text Replacement (`replace`)
+#### Text Replacement (`change`)
 Seamlessly replace occurrences of a string within file names.
 
 ```bash
-renamr replace "old-text" -w "new-text" ./src/**/*
+renamr change "old-text" -w "new-text" ./src/**/*
+```
+
+#### File Content Replacement (`content` or `rewrite`)
+Search and replace text *inside* the contents of files instead of just renaming the files.
+
+```bash
+renamr content "music player" -w "clara player" ./**/* --recursive
 ```
 
 #### Extension Modification (`ext`)
@@ -91,7 +98,7 @@ renamr upp ./src/**/* --recursive
 
 Safe preview of an architectural refactor:
 ```bash
-renamr replace "component" -w "widget" ./src/**/* --dry-run
+renamr change "component" -w "widget" ./src/**/* --dry-run
 ```
 
 Migrating a legacy JavaScript codebase to TypeScript:

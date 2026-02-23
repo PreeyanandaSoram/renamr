@@ -2,7 +2,7 @@ import path from 'path';
 import chalk from 'chalk';
 import { getFiles, renameFile, getBaseAndExt } from '../utils.js';
 
-export async function replace(pattern, files, options) {
+export async function change(pattern, files, options) {
   const replacement = options.with;
   const matches = await getFiles(files, options.recursive);
 
