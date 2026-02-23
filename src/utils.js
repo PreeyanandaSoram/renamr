@@ -4,7 +4,11 @@ import { glob } from 'glob';
 
 export async function getFiles(patterns, recursive) {
   const files = [];
-  for (const pattern of patterns) {
+
+  // Default to CWD if no files/patterns are specified
+  const targets = (!patterns || patterns.length === 0) ? [process.cwd()] : patterns;
+
+  for (const pattern of targets) {
     if (pattern.includes('*') || recursive) {
       const globPattern = recursive && !pattern.includes('*')
         ? `${pattern}/**/*`
@@ -12,8 +16,20 @@ export async function getFiles(patterns, recursive) {
       const matches = await glob(globPattern, { nodir: true });
       files.push(...matches);
     } else {
-      if (fs.existsSync(pattern) && fs.statSync(pattern).isFile()) {
-        files.push(pattern);
+      if (fs.existsSync(pattern)) {
+        const stat = fs.statSync(pattern);
+        if (stat.isFile()) {
+          files.push(pattern);
+        } else if (stat.isDirectory()) {
+          // Directory passed without -r: list files directly inside it
+          const entries = fs.readdirSync(pattern);
+          for (const entry of entries) {
+            const full = path.join(pattern, entry);
+            if (fs.statSync(full).isFile()) {
+              files.push(full);
+            }
+          }
+        }
       }
     }
   }

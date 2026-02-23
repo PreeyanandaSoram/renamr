@@ -23,7 +23,7 @@ program
   .version(pkg.version);
 
 program
-  .command('change <pattern> <files...>')
+  .command('change <pattern> [files...]')
   .description('Replace text in file names')
   .requiredOption('-w, --with <replacement>', 'Replacement string')
   .option('-d, --dry-run', 'Preview changes without applying', false)
@@ -31,7 +31,7 @@ program
   .action(change);
 
 program
-  .command('ext <files...>')
+  .command('ext [files...]')
   .description('Change file extensions')
   .requiredOption('-w, --with <newExt>', 'New extension')
   .option('-d, --dry-run', 'Preview changes without applying', false)
@@ -39,21 +39,21 @@ program
   .action(ext);
 
 program
-  .command('prefix <prefix> <files...>')
+  .command('prefix <prefix> [files...]')
   .description('Add prefix to file names')
   .option('-d, --dry-run', 'Preview changes without applying', false)
   .option('-r, --recursive', 'Search files recursively', false)
   .action(prefix);
 
 program
-  .command('suffix <suffix> <files...>')
+  .command('suffix <suffix> [files...]')
   .description('Add suffix to file names (before extension)')
   .option('-d, --dry-run', 'Preview changes without applying', false)
   .option('-r, --recursive', 'Search files recursively', false)
   .action(suffix);
 
 program
-  .command('lowercase <files...>')
+  .command('lowercase [files...]')
   .alias('low')
   .description('Convert file names to lowercase')
   .option('-d, --dry-run', 'Preview changes without applying', false)
@@ -61,7 +61,7 @@ program
   .action(lowercase);
 
 program
-  .command('uppercase <files...>')
+  .command('uppercase [files...]')
   .alias('upp')
   .description('Convert file names to uppercase')
   .option('-d, --dry-run', 'Preview changes without applying', false)
@@ -69,7 +69,7 @@ program
   .action(uppercase);
 
 program
-  .command('content <pattern> <files...>')
+  .command('content <pattern> [files...]')
   .alias('rewrite')
   .description('Replace text inside the contents of files')
   .requiredOption('-w, --with <replacement>', 'Replacement string')

@@ -10,6 +10,7 @@
 ## 🚀 Features
 
 - **Expressive Syntax:** Simple commands to replace text, modify extensions, and manipulate casing.
+- **Works from anywhere:** `cd` into any folder and run commands — no need to specify a path. Renamr targets the current directory by default.
 - **Dry Run Support:** Preview all your renaming operations safely before applying any changes using the `--dry-run` flag.
 - **Recursive Operations:** Seamlessly rename files nested deeply within complex directory structures.
 - **Cross-Platform:** Built on Node.js, ensuring consistent behavior across Windows, macOS, and Linux.
@@ -28,9 +29,13 @@ npm install -g renamr
 
 ## 🛠️ Usage Guide
 
-The general syntax follows a structured command format:
+Renamr works in two ways — from the **current directory** (no path needed) or with an **explicit path or glob**:
 
 ```bash
+# From the current directory (cd into your folder first)
+renamr <command> [options]
+
+# Or pass a specific file, folder, or glob pattern
 renamr <command> [options] <files...>
 ```
 
@@ -40,6 +45,10 @@ renamr <command> [options] <files...>
 Seamlessly replace occurrences of a string within file names.
 
 ```bash
+# From current directory
+renamr change "old-text" -w "new-text"
+
+# With explicit path or glob
 renamr change "old-text" -w "new-text" ./src/**/*
 ```
 
@@ -47,13 +56,24 @@ renamr change "old-text" -w "new-text" ./src/**/*
 Search and replace text *inside* the contents of files instead of just renaming the files.
 
 ```bash
-renamr content "music player" -w "video player" ./**/* --recursive
+# From current directory
+renamr content "music player" -w "clara player"
+
+# With explicit glob
+renamr content "music player" -w "clara player" ./**/* --recursive
 ```
 
 #### Extension Modification (`ext`)
 Quickly standardize or convert file extensions across your project.
 
 ```bash
+# Specific file
+renamr ext hello.js -w .ts
+
+# All .js files in current directory
+renamr ext *.js -w .ts
+
+# With glob path
 renamr ext ./src/**/*.js -w .ts
 ```
 
@@ -61,24 +81,35 @@ renamr ext ./src/**/*.js -w .ts
 Prepend a consistent string to the beginning of matched file names.
 
 ```bash
+# From current directory
+renamr prefix "img_"
+
+# With explicit glob
 renamr prefix "img_" ./assets/*.png
 ```
 
 #### Add Suffix (`suffix`)
-Append a string to matched file names, guaranteeing the suffix is inserted correctly right before the file extension.
+Append a string to matched file names, inserted correctly right before the file extension.
 
 ```bash
+# From current directory
+renamr suffix "_v2"
+
+# With explicit glob
 renamr suffix "_v2" ./data/*.json
 ```
 
 #### Case Conversions (`lowercase` & `uppercase`)
-Standardize naming conventions by applying lower or upper casing to file names. Both commands feature convenient shorthand aliases (`low` and `upp`).
+Standardize naming conventions by applying lower or upper casing to file names. Both commands support shorthand aliases (`low` and `upp`).
 
 ```bash
-# Convert to lowercase
+# Convert all files in current directory to lowercase
+renamr low
+
+# Or with an explicit path
 renamr low ./dist/**/* --recursive
 
-# Convert to uppercase
+# Uppercase with explicit path
 renamr upp ./src/**/* --recursive
 ```
 
