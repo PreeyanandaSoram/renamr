@@ -47,7 +47,7 @@ renamr change "old-text" -w "new-text" ./src/**/*
 Search and replace text *inside* the contents of files instead of just renaming the files.
 
 ```bash
-renamr content "music player" -w "clara player" ./**/* --recursive
+renamr content "music player" -w "video player" ./**/* --recursive
 ```
 
 #### Extension Modification (`ext`)
